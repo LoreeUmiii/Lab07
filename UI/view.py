@@ -1,4 +1,7 @@
 import flet as ft
+from flet.controls import alignment
+
+
 from UI.alert import AlertManager
 
 '''
@@ -14,6 +17,10 @@ class View:
         self.page.title = "Lab07"
         self.page.horizontal_alignment = "center"
         self.page.theme_mode = ft.ThemeMode.DARK
+
+        self._ddBiblioteca = None
+        self._ddGenere = None
+        self.lista_libri = None
 
         # Alert
         self.alert = AlertManager(page)
@@ -37,9 +44,20 @@ class View:
 
         # --- Sezione 2: Filtraggio ---
         # TODO
+        self._ddBiblioteca = ft.Dropdown(label = "Biblioteche di Torino",
+                                         width = 400,
+                                         on_select = self.controller.handle_sel_biblioteche)
+        self._ddGenere = ft.Dropdown(label = "Genere",
+                                     width = 400,
+                                    on_select = self.controller.handle_sel_genere)
 
+        self.controller.popola_dropdown()
         # Sezione 3: Libri
         # TODO
+        btn_libri = ft.Button(content = "Mostra Libri",
+                                on_click = self.controller.mostra_libri )
+        self.lista_libri = ft.ListView(expand = True, spacing = 5,
+                                        padding = 10,  auto_scroll = True, )
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -54,9 +72,19 @@ class View:
 
             # Sezione 2: Filtraggio
             # TODO
+            ft.Row( spacing = 80,
+                    controls = [self._ddBiblioteca, self._ddGenere],
+                    alignment = ft.MainAxisAlignment.CENTER),
+            ft.Divider(),
 
             # Sezione 3: Libri
             # TODO
+            ft.Row( spacing = 80,
+                    controls = [btn_libri],
+                    alignment = ft.MainAxisAlignment.CENTER),
+            ft.Divider(),
+
+            self.lista_libri,
         )
 
         self.page.scroll = "adaptive"
