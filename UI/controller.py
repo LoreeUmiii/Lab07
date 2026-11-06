@@ -85,5 +85,5 @@ class Controller:
             self._view.show_alert("Nessun filtro attivato ")
         else:
             for libro in libri:
-                txt_item = f"📖 {libro.titolo} | Autore: {getattr(libro, 'autore', 'N/D')} | Genere: {getattr(libro, 'genere', 'N/D')}"
-                self._view.lista_libri.append(ft.Text(txt_item))
+                txt_item = f"📖 {libro["titolo"]} | Autore: {libro["autore"]} | Genere: {libro["genere"]}"
+                self._view.lista_libri.controls.append(ft.Text(txt_item))

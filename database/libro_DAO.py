@@ -65,7 +65,7 @@ class LibroDAO:
                     from biblioteca as b, libro as l
                     where b.id = l.id_biblioteca and
                     l.genere = coalesce(%s, genere) 
-                    and b.id = (%s, biblioteca) """
+                    and b.id = coalesce(%s, b.id) """
 
         cursor.execute(query, (genere, biblioteca) )
 
