@@ -19,21 +19,23 @@ class Controller:
 
     # POPOLA DROPDOWN
     # TODO
-    def popola_dropdown(self ):
+    def popola_dropdown(self):
         # --- Popolamento DropDown Biblioteche ---
         self._view._ddBiblioteca.options.clear()
         self._view._ddBiblioteca.options.append(
             ft.dropdown.Option(key = "NONE", text = "Nessun Filtro")
         )
         biblioteche = self._model.get_biblioteche()
-        #print(biblioteche)
+        #print(biblioteche) # prova per vedere se si popola
         for biblioteca in biblioteche:
+            #print(f"{biblioteca.nome}")
+
             self._view._ddBiblioteca.options.append(
-                ft.dropdown.Option(
-                    key = str(biblioteca.id),
+                ft.dropdown.Option( key = str(biblioteca.id),
                     text = str(biblioteca.nome) ) )
 
         # --- Popolamento DropDown Generi ---
+        # Funzionante
         self._view._ddGenere.options.clear()
         self._view._ddGenere.options.append(
             ft.dropdown.Option(key = "NONE", text = "Nessun Filtro")
@@ -49,14 +51,14 @@ class Controller:
 
     # CALLBACKS DROPDOWN
     # TODO
-    def handle_sel_biblioteche(self):
+    def handle_sel_biblioteche(self, e):
         key = self._view._ddBiblioteca.value
         if key == "NONE" or not key:
             self.biblioteca_selezionata = None
         else:
             self.biblioteca_selezionata = key
 
-    def handle_sel_genere(self):
+    def handle_sel_genere(self, e):
         key = self._view._ddGenere.value
         if key == "NONE" or not key:
             self.genere_selezionato = None
@@ -66,9 +68,18 @@ class Controller:
     # AZIONE: MOSTRA LIBRI
     # TODO
     def mostra_libri(self, e):
+        biblioteca_key = self._view._ddBiblioteca.value
+        genere_val = self._view._ddGenere.value
+
+        # Gestisci il caso "NONE" o vuoto
+        self.biblioteca_selezionata = None if (biblioteca_key == "NONE" or not biblioteca_key) else biblioteca_key
+        self.genere_selezionato = None if (genere_val == "NONE" or not genere_val) else genere_val
+
+        self._view.lista_libri.controls.clear()
+
+        # Ora chiama il model con i valori sicuri
         libri = self._model.get_libri_filtrati(self.biblioteca_selezionata,
                                                self.genere_selezionato)
-        self._view.lista_libri.controls.clear()
 
         if not libri:
             self._view.show_alert("Nessun filtro attivato ")

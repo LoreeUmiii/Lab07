@@ -10,7 +10,7 @@ class BibliotecaDAO:
     def __init__(self):
         pass
 
-    # TODO
+    # Implementata
     def get_biblioteche(self):
         # Structure
         result = []
@@ -33,7 +33,7 @@ class BibliotecaDAO:
 
         # Popolamento della structure
         for row in cursor:
-            biblioteca = Biblioteca(*row)
+            biblioteca = Biblioteca(row["id"], row["nome"], row["indirizzo"])
             result.append(biblioteca)
 
         # Closing...
@@ -42,4 +42,3 @@ class BibliotecaDAO:
 
         return result
 
-    """row["id"], row["nome"], row["indirizzo"]"""

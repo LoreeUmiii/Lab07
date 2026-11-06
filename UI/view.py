@@ -46,17 +46,21 @@ class View:
         # TODO
         self._ddBiblioteca = ft.Dropdown(label = "Biblioteche di Torino",
                                          width = 400,
+                                         options = [],
                                          on_select = self.controller.handle_sel_biblioteche)
         self._ddGenere = ft.Dropdown(label = "Genere",
                                      width = 400,
-                                    on_select = self.controller.handle_sel_genere)
+                                     options = [],
+                                     on_select = self.controller.handle_sel_genere)
 
         self.controller.popola_dropdown()
+
         # Sezione 3: Libri
         # TODO
         btn_libri = ft.Button(content = "Mostra Libri",
                                 on_click = self.controller.mostra_libri )
-        self.lista_libri = ft.ListView(expand = True, spacing = 5,
+
+        self.lista_libri = ft.ListView(expand = True, spacing = 5, controls = [],
                                         padding = 10,  auto_scroll = True, )
 
         # --- Toggle Tema ---
